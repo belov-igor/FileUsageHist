@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib
 
-# matplotlib.rcParams['axes.unicode_minus'] = False
+matplotlib.rcParams['axes.unicode_minus'] = False
 
 price = [39.5, 39.9, 45.4, 38.9, 33.34]
 categories = ['host1', "host2", "host3", 'host4', 'host5']
