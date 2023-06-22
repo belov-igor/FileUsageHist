@@ -1,22 +1,16 @@
-import copy
-import os
 import subprocess
 
 
 class FileSystemUsageHist:
     """
-    # Класс-обработчик данных, полученных с adaptec для подключенных дисков командой arcconf getsmartstats
-    # Выходные данные: drives_count - количество дисков, подключенных к adaptec;
-    #                 adaptec_name - имя adaptec;
-    #                 report - итоговый отчет в виде словаря.
+
     """
 
     def __init__(self, username, hosts):
         """
-        :param username: имя пользователя при подключении к удаленному хосту
-        :param hostname: имя удаленного хоста
+        :param username: имя пользователя при подключении к удаленному хосту;
+        :param hosts: список удаленных хостов
         """
-
         self.hostname = str()
         self.username = username
         self.hosts = hosts
@@ -27,8 +21,7 @@ class FileSystemUsageHist:
 
     def get_filesystem_usage_data(self, hostname):
         """
-        Подключение к хостам по ssh, получение и обработка отчета (TODO adaptec arcconf getsmartstats) по всем дискам.
-
+        Подключение к хостам по ssh, получение и обработка отчета (TODO ).
         :return:
         """
         self.hostname = hostname
@@ -57,9 +50,7 @@ class FileSystemUsageHist:
     def run(self):
         """
         Запуск обработчика.
-        :return: drives_count - количество дисков, подключенных к adaptec;
-                 adaptec_name - имя adaptec;
-                 report - итоговый отчет в виде словаря
+        :return: report - итоговый отчет в виде словаря
         """
         # Получение и обработка данных
         for host in self.hosts:
