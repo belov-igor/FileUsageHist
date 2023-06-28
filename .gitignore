@@ -1,5 +1,6 @@
 venv/
 .idea
-test2.webp
 config/email_server.py
 config/hosts.py
+tmp/available.png
+tmp/used.png
