@@ -1,9 +1,9 @@
 import subprocess
 
 
-class FileSystemUsageHist:
+class FileSystemUsageReport:
     """
-
+    Класс для получения отчета об использовании файловой системы на удаленных хостах.
     """
 
     def __init__(self, username, hosts):
@@ -21,36 +21,32 @@ class FileSystemUsageHist:
 
     def get_filesystem_usage_data(self, hostname):
         """
-        Подключение к хостам по ssh, получение и обработка отчета (TODO ).
-        :return:
+        Получение данных об использовании файловой системы на удаленном хосте.
+        :param hostname: Имя удаленного хоста.
+        :return: None.
         """
         self.hostname = hostname
 
         # Подключение к хостам по ssh, получение данных командой "df"
-        connect = subprocess.run(
-            ["ssh", f"{self.username}@{self.hostname}", "df"], stdout=subprocess.PIPE)
+        connect = subprocess.run(["ssh", f"{self.username}@{self.hostname}", "df"], stdout=subprocess.PIPE)
         self.data = connect.stdout.decode().split('\n')
-        # print(self.data)
 
     def get_report(self):
         """
-        Обработка и получение необходимых данных о
-
-        :return:
+        Обработка данных об использовании файловой системы и формирование отчета.
+        :return: None.
         """
         for string in self.data:
             if "vol" in string:
                 vol = string.split()[-1]
                 percent = int(string.split()[-2][:-1])
-                # available = f'{round((int(string.split()[-3])) / (1024**2), 3)} GB'
-                # available = f'{string.split()[-3]}B'
-                available = round((int(string.split()[-3])) / (1024 ** 2), 2)
-                self.report.update({f'{self.hostname}{vol}': [available, percent]})
+                available = round((int(string.split()[-3])) / (1024 ** 3), 1)  # считаем в ТБ
+                self.report.update({f'{self.hostname}:{vol}': [available, percent]})
 
     def run(self):
         """
-        Запуск обработчика.
-        :return: report - итоговый отчет в виде словаря
+        Запуск процесса получения отчета об использовании файловой системы на всех удаленных хостах.
+        :return: Словарь с отчетом вида {<hostname:vol>: [available, percent]}.
         """
         # Получение и обработка данных
         for host in self.hosts:
